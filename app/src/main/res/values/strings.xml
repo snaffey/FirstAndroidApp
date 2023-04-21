@@ -6,4 +6,7 @@
     <string name="m2_txt_1">txt</string>
     <string name="m2_txt_2">yo</string>
     <string name="m2_txt_3">a</string>
+    <string name="e5_txt_2">btn2</string>
+    <string name="e5_txt_1">btn1</string>
+    <string name="e5_txt_3">btn3</string>
 </resources>
