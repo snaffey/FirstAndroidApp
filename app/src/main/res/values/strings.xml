@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">App</string>
+    <string name="txt_1">ok</string>
+    <string name="txt_2">o</string>
+    <string name="txt_btn_1">btn</string>
+    <string name="m2_txt_1">txt</string>
+    <string name="m2_txt_2">yo</string>
+    <string name="m2_txt_3">a</string>
 </resources>
