@@ -3,96 +3,93 @@ package com.example.app;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-
-import android.widget.TextView;
-
-import android.widget.EditText;
-
-import android.widget.Button;
-
+import android.text.TextUtils;
 import android.view.View;
-
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     TextView viewRes;
     EditText n1, n2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mainsoma);
-        viewRes = (TextView) findViewById(R.id.resultView);
-        n1 = (EditText) findViewById(R.id.n1);
-        n2 = (EditText) findViewById(R.id.n2);
-        Button btnSoma = (Button) findViewById(R.id.btnSomar);
-        Button btnSubtrair = (Button) findViewById(R.id.btnSubtrair);
-        Button btnMultiplicar = (Button) findViewById(R.id.btnMultiplicar);
-        Button btnDividir = (Button) findViewById(R.id.btnDividir);
+        viewRes = findViewById(R.id.resultView);
+        Button btnSoma = findViewById(R.id.btnSomar);
+        Button btnSubtrair = findViewById(R.id.btnSubtrair);
+        Button btnMultiplicar = findViewById(R.id.btnMultiplicar);
+        Button btnDividir = findViewById(R.id.btnDividir);
 
         btnSoma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (n1.getText().toString().isEmpty() || n2.getText().toString().isEmpty()) {
-                    Toast.makeText(MainActivity.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
-                } else {
-                    double num1 = Double.parseDouble(n1.getText().toString());
-                    double num2 = Double.parseDouble(n2.getText().toString());
-                    double soma = num1 + num2;
-                    viewRes.setText(String.valueOf(soma));
-                    Toast.makeText(MainActivity.this, "Soma: " + soma, Toast.LENGTH_SHORT).show();
-                }
+                calcular("+");
             }
         });
 
         btnSubtrair.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (n1.getText().toString().isEmpty() || n2.getText().toString().isEmpty()) {
-                    Toast.makeText(MainActivity.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
-                } else {
-                    double num1 = Double.parseDouble(n1.getText().toString());
-                    double num2 = Double.parseDouble(n2.getText().toString());
-                    double subtracao = num1 - num2;
-                    viewRes.setText(String.valueOf(subtracao));
-                    Toast.makeText(MainActivity.this, "Subtração: " + subtracao, Toast.LENGTH_SHORT).show();
-                }
+                calcular("-");
             }
         });
 
         btnMultiplicar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (n1.getText().toString().isEmpty() || n2.getText().toString().isEmpty()) {
-                    Toast.makeText(MainActivity.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
-                } else {
-                    double num1 = Double.parseDouble(n1.getText().toString());
-                    double num2 = Double.parseDouble(n2.getText().toString());
-                    double multiplicacao = num1 * num2;
-                    viewRes.setText(String.valueOf(multiplicacao));
-                    Toast.makeText(MainActivity.this, "Multiplicação: " + multiplicacao, Toast.LENGTH_SHORT).show();
-                }
+                calcular("*");
             }
         });
 
         btnDividir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (n1.getText().toString().isEmpty() || n2.getText().toString().isEmpty()) {
-                    Toast.makeText(MainActivity.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
-                } else {
-                    double num1 = Double.parseDouble(n1.getText().toString());
-                    double num2 = Double.parseDouble(n2.getText().toString());
-                    if (num2 == 0) {
-                        Toast.makeText(MainActivity.this, "Não é possível dividir por zero", Toast.LENGTH_SHORT).show();
-                    } else {
-                        double divisao = num1 / num2;
-                        viewRes.setText(String.valueOf(divisao));
-                        Toast.makeText(MainActivity.this, "Divisão: " + divisao, Toast.LENGTH_SHORT).show();
-                    }
-                }
+                calcular("/");
             }
         });
     }
-}
 
+    private void calcular(String operacao) {
+        n1 = findViewById(R.id.n1);
+        n2 = findViewById(R.id.n2);
+
+        if (TextUtils.isEmpty(n1.getText()) || TextUtils.isEmpty(n2.getText())) {
+            Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        double num1 = Double.parseDouble(n1.getText().toString());
+        double num2 = Double.parseDouble(n2.getText().toString());
+        double resultado = 0;
+
+        switch (operacao) {
+            case "+":
+                resultado = num1 + num2;
+                Toast.makeText(this, String.format("Soma: %.2f", resultado), Toast.LENGTH_SHORT).show();
+                break;
+            case "-":
+                resultado = num1 - num2;
+                Toast.makeText(this, String.format("Subtração: %.2f", resultado), Toast.LENGTH_SHORT).show();
+                break;
+            case "*":
+                resultado = num1 * num2;
+                Toast.makeText(this, String.format("Multiplicação: %.2f", resultado), Toast.LENGTH_SHORT).show();
+                break;
+            case "/":
+                if (num2 == 0) {
+                    Toast.makeText(this, "Não é possível dividir por zero", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                resultado = num1 / num2;
+                Toast.makeText(this, String.format("Divisão: %.2f", resultado), Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+        viewRes.setText(String.valueOf(resultado));
+    }
+}
